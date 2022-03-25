@@ -1,0 +1,38 @@
+.Lab3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bottom-border {
+    border-bottom: 1px solid black;
+}
+
+.fraction {
+    width: fit-content;
+}
+
+.Lab3_result {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    align-items: center;
+}
+
+table {
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 20px;
+    letter-spacing: 2px;
+}
+
+tr {
+    border: 1pt solid black;
+}
+
+.flex {
+    display: flex;
+}
