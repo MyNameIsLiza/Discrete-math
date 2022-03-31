@@ -3,7 +3,8 @@ import './Lab4.css';
 import {useCallback, useMemo, useState} from "react";
 
 export default function Lab4() {
-    const data = useMemo(() => [[0, 0], [0, 1], [1, 0], [1, 1]], []);
+    const [p, setP] = useState(false);
+    const [q, setQ] = useState(false);
 
     return (
         <div className="Lab4">
@@ -24,15 +25,19 @@ export default function Lab4() {
                     </tr>
                     </thead>
                     <tbody>
-                    {data.map(([p, q]) => <tr key={p + '' + q}>
-                        <td>{p}</td>
-                        <td>{q}</td>
-                        <td>{p && q}</td>
-                        <td>{p || q}</td>
+                    <tr>
+                        <td><input type="checkbox" checked={p} onChange={(e) => {
+                            setP(!!e.target.checked);
+                        }}/>{+p}</td>
+                        <td><input type="checkbox" checked={q} onChange={(e) => {
+                            setQ(!!e.target.checked);
+                        }}/>{+q}</td>
+                        <td>{+(p && q)}</td>
+                        <td>{+(p || q)}</td>
                         <td>{+!(p && q)}</td>
                         <td>{+(p && !q)}</td>
                         <td>{+(p === q)}</td>
-                    </tr>)}
+                    </tr>
                     </tbody>
                 </table>
             </div>

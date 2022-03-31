@@ -1,10 +1,10 @@
 import './Lab3.css';
 
-import {useCallback, useEffect, useMemo, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 
-function Lab3() {
-    const q1 = useMemo(() => 1, []);
-    const data = useMemo(() => [47, 1, 1, 2, 1, 2], []);
+export default function Lab3() {
+    const [q1, setQ1] = useState(-3);
+    const [data, setData] = useState([1, 1, 6, 2, 8]);
     const [result, setResult] = useState({p: [], Q: []});
 
     const fraction = useCallback((a, b) => {
@@ -22,20 +22,51 @@ function Lab3() {
         return result;
     }, [fraction]);
 
+    const equation = useCallback((p, Q) => {
+        const a = p[p.length - 1];
+        const b = Q[Q.length - 1];
+        let x = p[p.length - 2];
+        let y = Q[Q.length - 2];
+        if (a * x - b * y === 1) {
+            y = -y;
+        } else if (-a * x + b * y === 1) {
+            x = -x;
+        } else if (a * y - b * x === 1) {
+            console.log(1)
+            const t = y;
+            y = -x;
+            x = t;
+
+        } else if (-a * y + b * x === 1) {
+            console.log(2)
+            const t = y;
+            y = x;
+            x = -t;
+        } else if (a * y + b * x === 1) {
+            const t = y;
+            y = x;
+            x = t;
+        }
+        return <div>a * x + b * y = 1<br/>
+            <div>{a} * {x} + {b} * {y} = {a * x + b * y}</div>
+        </div>;
+    }, []);
+
     const calculateResult = useCallback(() => {
-        const p = [1, q1]
+        const p = [1, +q1]
         const Q = [0, 1]
         data.forEach((el) => {
-            p.push(p[p.length - 1] * el + p[p.length - 2]);
-            Q.push(Q[Q.length - 1] * el + Q[Q.length - 2]);
+            p.push(+p[p.length - 1] * +el + p[p.length - 2]);
+            Q.push(+Q[Q.length - 1] * +el + Q[Q.length - 2]);
         })
         setResult({
             p,
             Q,
             fraction: fraction(p[p.length - 1], Q[Q.length - 1]),
-            chainFraction: chainFraction([q1, ...data])
+            chainFraction: chainFraction([q1, ...data]),
+            equation: equation(p, Q)
         })
-    }, [data, q1, fraction, chainFraction]);
+    }, [data, q1, fraction, chainFraction, equation]);
 
     useEffect(() => {
         calculateResult();
@@ -44,13 +75,20 @@ function Lab3() {
     return (
         <div className="Lab3">
             <h1>Лабораторна робота №3</h1>
+            <input type="number" value={q1} onChange={(e) => {
+                setQ1(e.target.value);
+            }}/>
+            <input type="text" value={data.join(', ')} onChange={(e) => {
+                const temp = e.target.value.split(', ');
+                setData(temp);
+            }}/>
             <p>[{q1}; {data.join(', ')}]</p>
             <div className="Lab3_result">
                 <table>
                     <thead>
                     <tr>
                         <th>i</th>
-                        {[0, 1, 2, 3, 4, 5, 6, 7].map((el) => <th key={el}>{el}</th>)}
+                        {[q1, ...data, ''].map((el, index) => <th key={index}>{index}</th>)}
                     </tr>
                     </thead>
                     <tbody>
@@ -72,9 +110,8 @@ function Lab3() {
                 </table>
                 {result.fraction}
                 {result.chainFraction}
+                {result.equation}
             </div>
         </div>
     );
 }
-
-export default Lab3;
