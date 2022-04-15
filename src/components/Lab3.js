@@ -32,13 +32,11 @@ export default function Lab3() {
         } else if (-a * x + b * y === 1) {
             x = -x;
         } else if (a * y - b * x === 1) {
-            console.log(1)
             const t = y;
             y = -x;
             x = t;
 
         } else if (-a * y + b * x === 1) {
-            console.log(2)
             const t = y;
             y = x;
             x = -t;
@@ -53,8 +51,8 @@ export default function Lab3() {
     }, []);
 
     const calculateResult = useCallback(() => {
-        const p = [1, +q1]
-        const Q = [0, 1]
+        const p = [1, +q1];
+        const Q = [0, 1];
         data.forEach((el) => {
             p.push(+p[p.length - 1] * +el + p[p.length - 2]);
             Q.push(+Q[Q.length - 1] * +el + Q[Q.length - 2]);
@@ -65,7 +63,7 @@ export default function Lab3() {
             fraction: fraction(p[p.length - 1], Q[Q.length - 1]),
             chainFraction: chainFraction([q1, ...data]),
             equation: equation(p, Q)
-        })
+        });
     }, [data, q1, fraction, chainFraction, equation]);
 
     useEffect(() => {

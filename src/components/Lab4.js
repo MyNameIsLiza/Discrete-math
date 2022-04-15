@@ -1,6 +1,6 @@
 import './Lab4.css';
 
-import {useCallback, useMemo, useState} from "react";
+import {useState} from "react";
 
 export default function Lab4() {
     const [p, setP] = useState(false);
@@ -44,4 +44,3 @@ export default function Lab4() {
         </div>
     );
 }
-
