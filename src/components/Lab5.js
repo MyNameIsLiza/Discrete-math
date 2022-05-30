@@ -1,5 +1,5 @@
 //import './Lab5.css';
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 
 export default function Lab5() {
     const [students, setStudents] = useState([
@@ -62,14 +62,14 @@ export default function Lab5() {
 
     const vCheck = useCallback((el1, el2) => {
         let result = 0;
-        Object.entries(vStudents).map(([key, arr]) => {
+        Object.entries(vStudents).forEach(([key, arr]) => {
             if (arr.filter((el) => el.name === el1.name).length && arr.filter((el) => el.name === el2.name).length) {
                 result = key;
                 return result;
             }
         })
         return result;
-    }, [vStudents]);
+    }, [v, vStudents]);
     const getColor = useCallback((index)=>{
         switch (index) {
             case 'Королева👸': return 'lightpink';
@@ -87,7 +87,11 @@ export default function Lab5() {
             case 'ДЕНС💃': return 'lightcoral';
             default: return 'white';
         }
-    },[])
+    },[]);
+
+    useEffect(()=>{
+        setVStudents(v.f());
+    },[v])
 
     return (
         <div className="Lab5">
@@ -95,10 +99,8 @@ export default function Lab5() {
             <p>Задайте три відношення еквівалентності на множині студентів вашої академічної групи. Визначте класи
                 еквівалентності для цих відношень еквівалентності. Побудуйте відношення у вигляді таблиці</p>
             <select value={v.name} onChange={(e) => {
-                console.log(e.target.value)
-                setV(vs.find(function (el) {
-                    return el.name === e.target.value;
-                }));
+                setV(vs.find((el)=>
+                    el.name === e.target.value));
             }}>
                 <option value="sex">Розбиття на відношення відносно статі</option>
                 <option value="status">Розбиття на відношення відносно статусу</option>
